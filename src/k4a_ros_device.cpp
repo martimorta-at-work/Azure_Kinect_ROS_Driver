@@ -19,6 +19,7 @@
 #include <sensor_msgs/distortion_models.hpp>
 #include <sensor_msgs/image_encodings.hpp>
 #include <sensor_msgs/point_cloud2_iterator.hpp>
+#include <sensor_msgs/msg/point_field.hpp>
 #include <k4a/k4a.hpp>
 
 // Project headers
@@ -666,7 +667,10 @@ k4a_result_t K4AROSDevice::fillColorPointCloud(const k4a::image& pointcloud_imag
   }
 
   sensor_msgs::PointCloud2Modifier pcd_modifier(*point_cloud);
-  pcd_modifier.setPointCloud2FieldsByString(2, "xyz", "rgb");
+  pcd_modifier.setPointCloud2Fields(4, "x", 1, sensor_msgs::msg::PointField::FLOAT32, 
+                                       "y", 1, sensor_msgs::msg::PointField::FLOAT32, 
+                                       "z", 1, sensor_msgs::msg::PointField::FLOAT32, 
+                                       "rgb", 1, sensor_msgs::msg::PointField::FLOAT32);
 
   sensor_msgs::PointCloud2Iterator<float> iter_x(*point_cloud, "x");
   sensor_msgs::PointCloud2Iterator<float> iter_y(*point_cloud, "y");
